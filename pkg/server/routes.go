@@ -19,5 +19,6 @@ func NewRouter(handler *h.Handler) *mux.Router {
 	r := newRouter()
 
 	r.HandleFunc("/kabupaten", handler.District.DistrictList).Methods(http.MethodGet)
+	r.HandleFunc("/kabupaten/{district_id}", handler.District.GetByID).Methods(http.MethodGet)
 	return r
 }

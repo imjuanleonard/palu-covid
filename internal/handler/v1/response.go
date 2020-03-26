@@ -7,7 +7,8 @@ import (
 )
 
 const (
-	CodeServerError = "covid::server_error"
+	CodeServerError    = "covid::server_error"
+	CodeInvalidRequest = "covid::invalid_request"
 )
 
 type Error struct {

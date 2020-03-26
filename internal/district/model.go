@@ -1,6 +1,11 @@
 package district
 
-import "time"
+import (
+	"errors"
+	"time"
+)
+
+var ErrDistrictNotFound = errors.New("district does not found")
 
 type District struct {
 	ID                   int       `db:"id" json:"id"`
