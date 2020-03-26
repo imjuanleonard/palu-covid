@@ -21,12 +21,12 @@ type DatabaseConfig struct {
 
 func initDatabaseConfig() {
 	Database = DatabaseConfig{
-		Name:         mustGetString("DB_NAME"),
-		Host:         mustGetString("DB_HOST"),
-		User:         mustGetString("DB_USER"),
-		Password:     mustGetString("DB_PASSWORD"),
-		Port:         mustGetInt("DB_PORT"),
-		MaxPoolSize:  mustGetInt("DB_MAX_POOL_SIZE"),
+		Name:               mustGetString("DB_NAME"),
+		Host:               mustGetString("DB_HOST"),
+		User:               mustGetString("DB_USER"),
+		Password:           mustGetString("DB_PASSWORD"),
+		Port:               mustGetInt("DB_PORT"),
+		MaxPoolSize:        mustGetInt("DB_MAX_POOL_SIZE"),
 		ReadTimeoutSecond:  mustGetDurationS("DB_READ_TIMEOUT_SECOND"),
 		WriteTimeoutSecond: mustGetDurationS("DB_WRITE_TIMEOUT_SECOND"),
 	}

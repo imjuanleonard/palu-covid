@@ -53,3 +53,16 @@ func (s *store) findByID(ctx context.Context, id string) (*District, error) {
 
 	return &district, nil
 }
+
+func (s *store) update(ctx context.Context, district *District) error {
+	//TODO: Create a query builder, skip if data not empty
+
+	const updateQuery = "update kabupaten set \"nama\" = $1,\"odp\" = $2, \"pdp\" = $3,\"positif\" = $4,\"negatif\" = $5,\"meninggal\" = $6,\"selesai_pengawasan\" = $7,\"dalam_pengawasan\" = $8,\"selesai_pemantauan\" = $9, \"dalam_pemantauan\"=$10 WHERE id = $11"
+
+	queryFunction := func(ctx context.Context) error {
+		_, err := s.db.ExecContext(ctx, updateQuery, district.Name, district.ODP, district.PDP, district.Positive, district.Negative, district.PassAway, district.CompletedSupervision, district.UnderSupervision, district.CompletedObservation, district.UnderObservation, district.ID)
+		return err
+	}
+
+	return db.WithTimeout(ctx, config.Database.ReadTimeoutSecond, queryFunction)
+}

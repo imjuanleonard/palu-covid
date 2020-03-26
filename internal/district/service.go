@@ -13,6 +13,7 @@ var (
 type Service interface {
 	List(ctx context.Context) ([]District, error)
 	GetByID(ctx context.Context, id string) (*District, error)
+	Update(ctx context.Context, district *District) error
 }
 
 type service struct {
@@ -39,4 +40,8 @@ func (svc *service) GetByID(ctx context.Context, id string) (*District, error) {
 		return nil, err
 	}
 	return districs, nil
+}
+
+func (svc *service) Update(ctx context.Context, district *District) error {
+	return svc.store.update(ctx, district)
 }

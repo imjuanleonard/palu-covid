@@ -1,10 +1,12 @@
 package district
 
 import (
+	"encoding/json"
 	"github.com/gorilla/mux"
 	"github.com/imjuanleonard/palu-covid/internal/district"
 	"github.com/imjuanleonard/palu-covid/internal/handler/v1"
 	"github.com/imjuanleonard/palu-covid/pkg/logger"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -48,4 +50,32 @@ func (h *Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	v1.NewSuccessResponse(d).Write(w, http.StatusOK)
+}
+
+func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		logger.Warnf("[district.Handler.Update] error reading json body: %v", err)
+		v1.NewErrorResponse(v1.CodeInvalidRequest, "Invalid request", "Invalid request").Write(w, http.StatusBadRequest)
+		return
+	}
+
+	var d district.District
+	err = json.Unmarshal(body, &d)
+	if err != nil {
+		logger.Warnf("[district.Handler.Update] error reading json body: %v", err)
+		v1.NewErrorResponse(v1.CodeInvalidRequest, "Invalid request", "Invalid request").Write(w, http.StatusBadRequest)
+		return
+	}
+
+	//TODO: Add Validator for json Body, for now expect all filed are sent
+
+	ctx := r.Context()
+	if err := h.service.Update(ctx, &d); err != nil {
+		logger.Errorf("[district.Handler.Update] error updating district: %v", err)
+		v1.NewErrorResponse(v1.CodeServerError, "Internal server error", "Internal server error").Write(w, http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
 }
