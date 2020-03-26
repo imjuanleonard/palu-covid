@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	ErrNotFound = errors.New("district does not found")
+	ErrNotFound = errors.New("district not found")
 )
 
 type Service interface {
