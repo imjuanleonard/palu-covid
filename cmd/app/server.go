@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/imjuanleonard/palu-covid/internal/handler"
 	"github.com/imjuanleonard/palu-covid/pkg/logger"
 
 	"github.com/imjuanleonard/palu-covid/pkg/server"
@@ -8,15 +9,13 @@ import (
 )
 
 func Server(cmd *cobra.Command, args []string) error {
-	h := server.NewHandler()
+	h := handler.NewHandler()
 	r := server.NewRouter(h)
 	s, err := server.New(r)
 	if err != nil {
 		logger.Errorf("could not initialize server: %v", err)
 		return err
 	}
-
-	// routes.SetupRoutes(s)
 	s.StartHTTPServer()
 	return nil
 }

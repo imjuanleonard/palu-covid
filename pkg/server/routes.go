@@ -2,8 +2,8 @@ package server
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/imjuanleonard/palu-covid/pkg/middleware"
 	h "github.com/imjuanleonard/palu-covid/internal/handler"
+	"github.com/imjuanleonard/palu-covid/pkg/middleware"
 	"net/http"
 )
 
@@ -15,9 +15,9 @@ func newRouter() *mux.Router {
 	return r
 }
 
-func NewRouter(handler *handler) *mux.Router {
+func NewRouter(handler *h.Handler) *mux.Router {
 	r := newRouter()
 
-	// TODO: Put all router HERE
+	r.HandleFunc("/kabupaten", handler.District.DistrictList).Methods(http.MethodGet)
 	return r
 }
