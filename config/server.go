@@ -18,9 +18,9 @@ type ServerConfig struct {
 func initServerConfig() {
 	Server = ServerConfig{
 		Port:               mustGetInt("SERVER_PORT"),
-		ReadTimeoutSecond:  mustGetDurationS("SERVER_READ_TIMEOUT"),
-		WriteTimeoutSecond: mustGetDurationS("SERVER_WRITE_TIMEOUT"),
-		IdleTimeoutSecond:  mustGetDurationS("SERVER_IDLE_TIMEOUT"),
+		ReadTimeoutSecond:  mustGetDurationS("SERVER_READ_TIMEOUT_SECOND"),
+		WriteTimeoutSecond: mustGetDurationS("SERVER_WRITE_TIMEOUT_SECOND"),
+		IdleTimeoutSecond:  mustGetDurationS("SERVER_IDLE_TIMEOUT_SECOND"),
 	}
 	Server.Address = fmt.Sprintf("0.0.0.0:%d", Server.Port)
 }
